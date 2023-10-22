@@ -1,0 +1,22 @@
+{
+  "name": "mini-test-runner",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test-all": "node index.js"
+  },
+  "keywords": [
+    "mini-test-runner"
+  ],
+  "author": {
+    "name": "Nansen Ho",
+    "email": "song.he0302@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.19.5",
+    "glob": "^10.3.10"
+  }
+}
