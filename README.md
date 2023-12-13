@@ -1,5 +1,21 @@
 # Mini Test Runner
 
+This is a mini test runner for learning test.
+
+## :hammer_and_wrench: Quickstart
+
+```bash
+# clone this project
+git clone https://github.com/NansenHo/mini-test-runner.git
+cd mini-test-runner
+
+# install packages
+pnpm install
+
+# run all tests
+pnpm run test-all
+```
+
 ## :pushpin: Tasks
 
 - [x] `test`
@@ -18,22 +34,11 @@
   - [x] 执行所有脚本
 - [x] `自动执行 run()`
 
-## :hammer_and_wrench: Quickstart
-
-```bash
-pnpm install
-```
-
-```bash
-# run all tests
-pnpm run test-all
-```
-
 ## :memo: Notes
 
 ### 读取文件和文件内容
 
-#### 拿到所有命名为 `*.spec.js` 的文件。
+#### 拿到所有命名为 `*.spec.js` 的文件
 
 1. 安装 [glob](https://github.com/isaacs/node-glob)
 
@@ -127,42 +132,42 @@ console.log(fileContent);
 
 1. 安装 [esbuild](https://esbuild.github.io/)
 
-```bash
-pnpm i esbuild
-```
+   ```bash
+   pnpm i esbuild
+   ```
 
 2. 导入 esbuild 里的 `build` 方法
 
-`build` 方法是一个 `promise`。我们可以传入打包的配置。
+   `build` 方法是一个 `promise`。我们可以传入打包的配置。
 
-```js
-import { build } from "esbuild";
-```
+   ```js
+   import { build } from "esbuild";
+   ```
 
 3. 封装一个自己的 build 方法
 
-```js
-async function runModule(fileContent) {
-  const result = await build({
-    stdin: {
-      contents: fileContent,
-      resolveDir: path.join(process.cwd(), "tests"),
-    },
-    write: false, // 是否将结果写入磁盘，而不是直接返回
-    bundle: true, // 是否将所有输入文件打包成一个输出文件。
-    target: "esnext",
-  });
-  // console.log(result);
+   ```js
+   async function runModule(fileContent) {
+     const result = await build({
+       stdin: {
+         contents: fileContent,
+         resolveDir: path.join(process.cwd(), "tests"),
+       },
+       write: false, // 是否将结果写入磁盘，而不是直接返回
+       bundle: true, // 是否将所有输入文件打包成一个输出文件。
+       target: "esnext",
+     });
+     // console.log(result);
 
-  const builtCode = result.outputFiles[0].text;
-  // console.log(builtCode);
+     const builtCode = result.outputFiles[0].text;
+     // console.log(builtCode);
 
-  new Function(builtCode)();
-}
-```
+     new Function(builtCode)();
+   }
+   ```
 
-`write` 配置项默认为 `true`。esbuild 会将构建结果写入磁盘（例如，到 `outDir` 或 `outfile` 指定的位置）。
+   `write` 配置项默认为 `true`，esbuild 会将构建结果写入磁盘（例如，到 `outDir` 或 `outfile` 指定的位置）。
 
-如果为 `false`，则不会写入磁盘，而是将结果返回到 JavaScript API 的调用者。
+   如果为 `false`，则不会写入磁盘，而是将结果返回到 JavaScript API 的调用者。
 
-这对于那些想要进一步处理构建输出或只是在内存中使用它的场景（例如某些开发服务器）非常有用。
+   这对于那些想要进一步处理构建输出或只是在内存中使用它的场景（例如某些开发服务器）非常有用。
